@@ -4,7 +4,7 @@
       v-if="pieceObj.name !== ''"
       :class="
         processPieceNowColorToShowBorder(pieceObj.color) ? 'rect-border' : ''
-      "      
+      "
     >
       <div
         v-if="pieceObj.isOpen"
@@ -23,7 +23,7 @@
         @click="openPiece(pieceObj.color)"
       ></div>
     </div>
-    <div class="d-none" v-else @click="clickEmpty(pieceObj)">{{ "dsadasdasd" }}</div>
+    <div class="dasdasdas" v-else @click="clickEmpty(pieceObj)"/>
   </main>
 </template>
 <script>
@@ -78,45 +78,73 @@ export default {
     };
     const processIsCanEat = (eatName) => {
       const rank = getRank();
-      const isSpecial = 1 === rank[getPieceType.lastPieceName];
-      if (!isSpecial) {
-        return rank[getPieceType.lastPieceName] >= rank[eatName];
+      switch (rank[getPieceType.lastPieceName]) {
+        case 1: {
+          if(rank[eatName]===1 || rank[eatName]===7){
+            return true;
+          }
+          break
+        }
+        case 2: {
+          break
+        }
+        case 7:{
+          if(rank[eatName]===1){
+            return false;
+          }
+          return rank[getPieceType.lastPieceName] >= rank[eatName];          
+        }
+        default: {
+          return rank[getPieceType.lastPieceName] >= rank[eatName];
+        }
       }
     };
     const getIndex = (obj) => {
-      if (obj.color === getPieceType.nowPieceColor) {
+      console.log("getIndex");
+      if (obj.color === getPieceType.nowPieceColor) {        
         getPieceType.actionSetLastPosition(props.columnIndex, props.rowIndex);
         getPieceType.actionSetIsClickNowColorPiece(true);
         getPieceType.actionsSetLastPieceName(obj.name);
       } else {
-        if (getPieceType.isClickNowColorPiece) {
+        if (getPieceType.isClickNowColorPiece) {          
           const isCanMove = processIsCanMove(props.columnIndex, props.rowIndex);
           const isCanEat = processIsCanEat(obj.name);
-          if (isCanMove && isCanEat) {
-            //被吃得
-            console.log(
-              getPieceType.pieceArray[props.rowIndex][props.columnIndex]
-            );
-            //主動要吃的
-            console.log(
+          if (isCanMove && isCanEat) {            
+            // // 被吃得
+            // console.log(
+            //   "被吃得",
+            //   getPieceType.pieceArray[props.rowIndex][props.columnIndex]
+            // );
+            // //主動要吃的
+            // console.log(
+            //   "主動吃的",
+            //   getPieceType.pieceArray[getPieceType.lastYPosition][
+            //     getPieceType.lastXPosition
+            //   ]
+            // );
+            // 棋子吃掉並且移動
+            if (
               getPieceType.pieceArray[getPieceType.lastYPosition][
                 getPieceType.lastXPosition
-              ]
-            );
-            //棋子吃掉並且移動
-            getPieceType.pieceArray[props.rowIndex][props.columnIndex].name =
+              ].name !== ""
+            ) {
+              getPieceType.pieceArray[props.rowIndex][props.columnIndex].name =
+                getPieceType.pieceArray[getPieceType.lastYPosition][
+                  getPieceType.lastXPosition
+                ].name;
+              getPieceType.pieceArray[props.rowIndex][props.columnIndex].color =
+                getPieceType.pieceArray[getPieceType.lastYPosition][
+                  getPieceType.lastXPosition
+                ].color;
               getPieceType.pieceArray[getPieceType.lastYPosition][
                 getPieceType.lastXPosition
-              ].name;
-            getPieceType.pieceArray[props.rowIndex][props.columnIndex].color =
-              getPieceType.pieceArray[getPieceType.lastYPosition][
-                getPieceType.lastXPosition
-              ].color;
-            getPieceType.pieceArray[getPieceType.lastYPosition][
-              getPieceType.lastXPosition
-            ].name = "";
-            getPieceType.actionSetLastPosition(null, null);
-            getPieceType.actionsSetLastPieceName('');            
+              ].name = "";
+              getPieceType.actionSetLastPosition(null, null);
+              getPieceType.actionsSetLastPieceName("");
+              const nextColor =
+                getPieceType.nowPieceColor === "red" ? "black" : "red";
+              getPieceType.actionsSetNowPieceColor(nextColor);
+            }
           }
           // console.log("可不可以移動", isCanMove);
           // console.log("可不可以吃", isCanEat);
@@ -131,13 +159,6 @@ export default {
     };
     const clickEmpty = (obj) => {
       const isCanMove = processIsCanMove(props.columnIndex, props.rowIndex);
-      console.log(isCanMove);
-      console.log("要吃掉的位置", props.columnIndex, props.rowIndex);
-      console.log(
-        "移動的棋子的位置",
-        getPieceType.lastXPosition,
-        getPieceType.lastYPosition
-      );
       console.log(obj);
       if (isCanMove && obj.name === "") {
         getPieceType.pieceArray[props.rowIndex][props.columnIndex].name =
@@ -151,18 +172,24 @@ export default {
         getPieceType.pieceArray[getPieceType.lastYPosition][
           getPieceType.lastXPosition
         ].name = "";
+        const nextColor =
+          getPieceType.nowPieceColor === "red" ? "black" : "red";
+        getPieceType.actionsSetNowPieceColor(nextColor);
       }
     };
     const openPiece = (color) => {
-      if (!getPieceType.isGameStart) {
+      if (!getPieceType.isGameStart) {        
         let firstColor = color === "red" ? "紅方" : "黑方";
         let secondColor = color === "red" ? "黑方" : "紅方";
-        const nowColor = color === "red" ? "黑方" : "紅方";
+        const nowColor = color === "red" ? "black" : "red";
+        // console.log(firstColor);
+        // console.log(secondColor);
+        // console.log(nowColor);
         getPieceType.actionStartStatus(true);
         getPieceType.actionsOffensiveMove(firstColor);
         getPieceType.actionsdefensiveMove(secondColor);
         getPieceType.actionsSetNowPieceColor(nowColor);
-      } else {
+      } else {        
         getPieceType.actionsSetNowPieceColor(
           getPieceType.nowPieceColor === "red" ? "black" : "red"
         );
