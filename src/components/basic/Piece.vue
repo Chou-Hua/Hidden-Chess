@@ -23,7 +23,7 @@
         @click="openPiece(pieceObj.color)"
       ></div>
     </div>
-    <div class="dasdasdas" v-else @click="clickEmpty(pieceObj)"/>
+    <div class="dasdasdas" v-else @click="clickEmpty(pieceObj)" />
   </main>
 </template>
 <script>
@@ -76,23 +76,58 @@ export default {
       });
       return checkBol;
     };
+    //用來確認路徑上是否有一顆棋子
+    const checkPathIsHavePiece = () => {};
+    const processIsBoCanEat = (targetX, targetY) => {
+      const lastX = getPieceType.lastXPosition;
+      const lastY = getPieceType.lastYPosition;
+      const isRunY = lastX === targetX;
+      const isRunX = lastY === targetY;
+      const targetObj = { x: targetX, y: targetY };
+      if (isRunX) {
+        const firstIndex = targetX > lastX ? lastX : targetX;
+        const secnodIndex = targetX < lastX ? lastX : targetX;
+        const pathPieceArray = getPieceType.pieceArray[lastY].slice(
+          firstIndex + 1,
+          secnodIndex
+        );
+        let count = 0;
+        pathPieceArray.forEach((element) => {
+          if (element.name !== "") {
+            count = count + 1;
+          }
+        });
+        return count === 1 ? true : false;
+      }
+      if (isRunY) {
+        const firstIndex = targetY > lastY ? lastY : targetY;
+        const secnodIndex = targetY < lastY ? lastY : targetY;
+        let count = 0;
+        for (let i = firstIndex; i < secnodIndex; i++) {
+          if(getPieceType.pieceArray[i][lastX].name!==''){
+            count++;
+          }
+        }
+        return count === 2 ? true : false;
+      }
+    };
     const processIsCanEat = (eatName) => {
       const rank = getRank();
       switch (rank[getPieceType.lastPieceName]) {
         case 1: {
-          if(rank[eatName]===1 || rank[eatName]===7){
+          if (rank[eatName] === 1 || rank[eatName] === 7) {
             return true;
           }
-          break
+          break;
         }
         case 2: {
-          break
+          return true;
         }
-        case 7:{
-          if(rank[eatName]===1){
+        case 7: {
+          if (rank[eatName] === 1) {
             return false;
           }
-          return rank[getPieceType.lastPieceName] >= rank[eatName];          
+          return rank[getPieceType.lastPieceName] >= rank[eatName];
         }
         default: {
           return rank[getPieceType.lastPieceName] >= rank[eatName];
@@ -100,16 +135,19 @@ export default {
       }
     };
     const getIndex = (obj) => {
-      console.log("getIndex");
-      if (obj.color === getPieceType.nowPieceColor) {        
+      if (obj.color === getPieceType.nowPieceColor) {
         getPieceType.actionSetLastPosition(props.columnIndex, props.rowIndex);
         getPieceType.actionSetIsClickNowColorPiece(true);
         getPieceType.actionsSetLastPieceName(obj.name);
       } else {
-        if (getPieceType.isClickNowColorPiece) {          
-          const isCanMove = processIsCanMove(props.columnIndex, props.rowIndex);
+        if (getPieceType.isClickNowColorPiece) {
+          const rank = getRank();
+          const isCanMove =
+            rank[getPieceType.lastPieceName] !== 2
+              ? processIsCanMove(props.columnIndex, props.rowIndex)
+              : processIsBoCanEat(props.columnIndex, props.rowIndex);
           const isCanEat = processIsCanEat(obj.name);
-          if (isCanMove && isCanEat) {            
+          if (isCanMove && isCanEat) {
             // // 被吃得
             // console.log(
             //   "被吃得",
@@ -159,7 +197,6 @@ export default {
     };
     const clickEmpty = (obj) => {
       const isCanMove = processIsCanMove(props.columnIndex, props.rowIndex);
-      console.log(obj);
       if (isCanMove && obj.name === "") {
         getPieceType.pieceArray[props.rowIndex][props.columnIndex].name =
           getPieceType.pieceArray[getPieceType.lastYPosition][
@@ -178,7 +215,7 @@ export default {
       }
     };
     const openPiece = (color) => {
-      if (!getPieceType.isGameStart) {        
+      if (!getPieceType.isGameStart) {
         let firstColor = color === "red" ? "紅方" : "黑方";
         let secondColor = color === "red" ? "黑方" : "紅方";
         const nowColor = color === "red" ? "black" : "red";
@@ -189,7 +226,7 @@ export default {
         getPieceType.actionsOffensiveMove(firstColor);
         getPieceType.actionsdefensiveMove(secondColor);
         getPieceType.actionsSetNowPieceColor(nowColor);
-      } else {        
+      } else {
         getPieceType.actionsSetNowPieceColor(
           getPieceType.nowPieceColor === "red" ? "black" : "red"
         );
@@ -198,8 +235,10 @@ export default {
     };
     return {
       getPieceType,
+      checkPathIsHavePiece,
       clickEmpty,
       processIsCanMove,
+      processIsBoCanEat,
       processPieceNowColorToShowBorder,
       processIsCanEat,
       getIndex,
