@@ -43,6 +43,7 @@ export default {
       getPieceStore.offensiveMove = "";
       getPieceStore.defensiveMove = "";
       getPieceStore.actionStartStatus(false);
+      getPieceStore.actionsSetNowPieceColor("");
     };
     const processPieceNowColorToShowBorder= (color)=>{
       return getPieceStore.nowPieceColor === color;
