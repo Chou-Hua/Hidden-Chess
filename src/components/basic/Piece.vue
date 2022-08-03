@@ -23,7 +23,7 @@
         @click="openPiece(pieceObj.color)"
       ></div>
     </div>
-    <div class="dasdasdas" v-else @click="clickEmpty(pieceObj)" />
+    <div class="no-piece" v-else @click="clickEmpty(pieceObj)" />
   </main>
 </template>
 <script>

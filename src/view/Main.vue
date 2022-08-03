@@ -9,7 +9,7 @@
     <div>
       <p>{{ getNowPieceColor() }}</p>
     </div>
-    <div id="piece">
+    <div id="piece" class="chess">
       <div
         class="d-flex"
         v-for="(item, index) in getPieceStore.pieceArray"
