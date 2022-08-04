@@ -5,4 +5,4 @@ npm i
 
 npm run dev 
 
-OR GOTO https://hidden-chess.vercel.app/  Enjooy!
+OR GOTO https://hidden-chess.vercel.app/  Enjoy!
