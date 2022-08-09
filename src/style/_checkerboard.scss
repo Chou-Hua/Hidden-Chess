@@ -104,3 +104,21 @@
         transform: rotate(90deg);             
     }
 }
+.float-right{
+    float: right;    
+}
+.float-left{
+    float: left;
+}
+.red-cycle{
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    background-color: red;
+}
+.black-cycle{
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    background-color: black;  
+}

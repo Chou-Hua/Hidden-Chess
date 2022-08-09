@@ -1,13 +1,20 @@
 <template>
   <main>
-    <div>
-      <p>先手: {{ getPieceStore.offensiveMove }}</p>
-    </div>
-    <div>
-      <p>後手: {{ getPieceStore.defensiveMove }}</p>
-    </div>
-    <div>
-      <p>{{ getNowPieceColor() }}</p>
+    <div style="display: flex; justify-content: space-between">
+      <div class="d-flex">
+        <div>
+          先手: {{ getPieceStore.offensiveMove }}
+        </div>
+        <div>
+          &nbsp;後手: {{ getPieceStore.defensiveMove }}
+        </div>
+      </div>
+      <div class="float-right">
+        <div class="d-flex">
+          &nbsp;{{ getNowPieceColor() }}&nbsp;
+          <div v-html="getNowPieceColorCycle()"></div>
+        </div>
+      </div>
     </div>
     <div id="piece" class="chess">
       <div
@@ -45,22 +52,32 @@ export default {
       getPieceStore.actionStartStatus(false);
       getPieceStore.actionsSetNowPieceColor("");
     };
-    const processPieceNowColorToShowBorder= (color)=>{
+    const processPieceNowColorToShowBorder = (color) => {
       return getPieceStore.nowPieceColor === color;
-    }
+    };
     const getNowPieceColor = () => {
       if (getPieceStore.nowPieceColor === "") {
         return "賽局尚未開始!";
       } else {
-        const name = getPieceStore.nowPieceColor === "red" ? "紅方" : "黑方"
+        const name = getPieceStore.nowPieceColor === "red" ? "紅方" : "黑方";
         return "目前是:" + name + "的回合";
       }
     };
+    const getNowPieceColorCycle = () => {
+      if (getPieceStore.nowPieceColor === "") {
+        return "<div></div>";
+      } else {
+        // const name = getPieceStore.nowPieceColor === "red" ? "紅方" : "黑方";
+        return getPieceStore.nowPieceColor === "red" ? `<div class="red-cycle"></div>` : `<div class="black-cycle"></div>`
+        
+      }
+    };    
     return {
-      getPieceStore,      
+      getPieceStore,
       resetPiece,
+      getNowPieceColorCycle,
       getNowPieceColor,
-      processPieceNowColorToShowBorder
+      processPieceNowColorToShowBorder,
     };
   },
   components: {
