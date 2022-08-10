@@ -24,14 +24,23 @@
       ></div>
     </div>
     <div class="no-piece" v-else @click="clickEmpty(pieceObj)" />
+    <audio controls hidden ref="openPieceMusic" Volume="100">
+      <source src="../../assets/openPiece.wav" type="audio/wav" />
+    </audio>
+    <audio controls hidden ref="movePiece" Volume="100">
+      <source src="../../assets/movePiece.mp3" type="audio/mp3" />
+    </audio>
   </main>
 </template>
 <script>
 import { usePieceStore } from "../../store/pieceStatus";
 import { getRank } from "../../store/randomPiece";
+import { ref } from "vue";
 
 export default {
   setup(props) {
+    const openPieceMusic = ref();
+    const movePiece = ref();
     const getPieceType = usePieceStore();
     const getPieceColorClass = (color) => {
       return color === "red" ? "font-piece-red" : "font-piece-black";
@@ -104,7 +113,7 @@ export default {
         const secnodIndex = targetY < lastY ? lastY : targetY;
         let count = 0;
         for (let i = firstIndex; i < secnodIndex; i++) {
-          if(getPieceType.pieceArray[i][lastX].name!==''){
+          if (getPieceType.pieceArray[i][lastX].name !== "") {
             count++;
           }
         }
@@ -166,7 +175,11 @@ export default {
                 getPieceType.lastXPosition
               ].name !== ""
             ) {
-              getPieceType.actionSetIsBeEatPiece(getPieceType.pieceArray[props.rowIndex][props.columnIndex]);
+              movePiece.currentTime = 0;
+              movePiece.value.play();
+              getPieceType.actionSetIsBeEatPiece(
+                getPieceType.pieceArray[props.rowIndex][props.columnIndex]
+              );
               getPieceType.pieceArray[props.rowIndex][props.columnIndex].name =
                 getPieceType.pieceArray[getPieceType.lastYPosition][
                   getPieceType.lastXPosition
@@ -197,6 +210,8 @@ export default {
       }
     };
     const clickEmpty = (obj) => {
+      movePiece.currentTime = 0;
+      movePiece.value.play();
       const isCanMove = processIsCanMove(props.columnIndex, props.rowIndex);
       if (isCanMove && obj.name === "") {
         getPieceType.pieceArray[props.rowIndex][props.columnIndex].name =
@@ -216,6 +231,8 @@ export default {
       }
     };
     const openPiece = (color) => {
+      openPieceMusic.currentTime = 0;
+      openPieceMusic.value.play();
       if (!getPieceType.isGameStart) {
         let firstColor = color === "red" ? "紅方" : "黑方";
         let secondColor = color === "red" ? "黑方" : "紅方";
@@ -236,6 +253,8 @@ export default {
     };
     return {
       getPieceType,
+      movePiece,
+      openPieceMusic,
       checkPathIsHavePiece,
       clickEmpty,
       processIsCanMove,

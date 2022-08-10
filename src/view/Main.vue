@@ -3,8 +3,8 @@
     <div class="d-flex">
       <div class="piece-list-div direction-rtl">
         <EatPiece
-          :pieceArray="getPieceStore.blackPieceArray"
-          :pieceColor="'black'"
+          :pieceArray="getBeEatArray(getPieceStore.offensiveMove)"
+          :pieceColor="getPieceStore.offensiveMove"
         />
       </div>
       <div>
@@ -29,7 +29,7 @@
             <div v-for="(data, num) in item" :key="num">
               <div class="square">
                 <div>
-                  <Piece
+                  <Piece                  
                     :pieceObj="data"
                     :rowIndex="index"
                     :columnIndex="num"
@@ -45,8 +45,8 @@
       </div>
       <div class="piece-list-div">
         <EatPiece
-          :pieceArray="getPieceStore.redPieceArray"
-          :pieceColor="'red'"
+          :pieceArray="getBeEatArray(getPieceStore.defensiveMove)"
+          :pieceColor="getPieceStore.defensiveMove"
         />
       </div>
     </div>
@@ -57,6 +57,7 @@ import Piece from "../components/basic/Piece.vue";
 import EatPiece from "./EatPiece.vue";
 import { createPieceRowColumn } from "../store/randomPiece";
 import { usePieceStore } from "../store/pieceStatus";
+import { onUpdated } from "vue";
 
 export default {
   setup() {
@@ -92,8 +93,35 @@ export default {
           : `<div class="black-cycle"></div>`;
       }
     };
+    const getBeEatArray = (color) => {
+      switch (color) {
+        case "red": {
+          return getPieceStore.redPieceArray;
+        }
+        case "black": {
+          return getPieceStore.blackPieceArray;
+        }
+        default: {
+          break;
+        }
+      }
+    };
+    const processWhoWin = () => {
+      if (getPieceStore.redPieceArray.length >= 16) {
+        alert("黑方獲勝");
+        console.log("blackWin");
+      }
+      if (getPieceStore.blackPieceArray.length >= 16) {
+        alert("紅方獲勝");
+        console.log("redWin");
+      }
+    };
+    onUpdated(() => {
+      processWhoWin();
+    });
     return {
       getPieceStore,
+      getBeEatArray,
       resetPiece,
       getNowPieceColorCycle,
       getNowPieceColor,
