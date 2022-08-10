@@ -144,13 +144,26 @@
 .border-black {
   border-color: black;
 }
-.piece-list{
-  padding:2px 10px;;
+.piece-list {
+  padding: 2px 10px;
 }
-.piece-list-div{
-  padding-top:20px;
-  display: flex;  
+.piece-list-div {
+  width: 100px;
+  padding-top: 20px;
+  display: flex;
 }
-.direction-rtl{
+.direction-rtl {
   direction: rtl;
+}
+
+.now-round {
+  display: flex;
+  font-size: 25px;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+.title-font {
+  font-size: 20px;
+  font-weight: bold;
 }

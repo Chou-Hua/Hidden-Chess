@@ -3,21 +3,21 @@
     <div class="d-flex">
       <div class="piece-list-div direction-rtl">
         <EatPiece
-          :pieceArray="getBeEatArray(getPieceStore.offensiveMove)"
-          :pieceColor="getPieceStore.offensiveMove"
+          :pieceArray="getBeEatArray(getPieceStore.defensiveMove)"
+          :pieceColor="getPieceStore.defensiveMove"
         />
       </div>
       <div>
         <div style="display: flex; justify-content: space-between">
-          <div class="d-flex">
+          <div class="d-flex title-font">
             <div>先手: {{ getPieceStore.offensiveMove }}</div>
-            <div>&nbsp;後手: {{ getPieceStore.defensiveMove }}</div>
           </div>
-          <div class="float-right">
-            <div class="d-flex">
-              &nbsp;{{ getNowPieceColor() }}&nbsp;
-              <div v-html="getNowPieceColorCycle()"></div>
-            </div>
+          <div class="now-round">
+            &nbsp;{{ getNowPieceColor() }}&nbsp;
+            <div v-html="getNowPieceColorCycle()"></div>
+          </div>
+          <div class="float-right title-font">
+            <div>&nbsp;後手: {{ getPieceStore.defensiveMove }}</div>
           </div>
         </div>
         <div id="piece" class="chess">
@@ -29,7 +29,7 @@
             <div v-for="(data, num) in item" :key="num">
               <div class="square">
                 <div>
-                  <Piece                  
+                  <Piece
                     :pieceObj="data"
                     :rowIndex="index"
                     :columnIndex="num"
@@ -45,8 +45,8 @@
       </div>
       <div class="piece-list-div">
         <EatPiece
-          :pieceArray="getBeEatArray(getPieceStore.defensiveMove)"
-          :pieceColor="getPieceStore.defensiveMove"
+          :pieceArray="getBeEatArray(getPieceStore.offensiveMove)"
+          :pieceColor="getPieceStore.offensiveMove"
         />
       </div>
     </div>
@@ -94,11 +94,12 @@ export default {
       }
     };
     const getBeEatArray = (color) => {
+      console.log(color);
       switch (color) {
-        case "red": {
+        case "紅方": {
           return getPieceStore.redPieceArray;
         }
-        case "black": {
+        case "黑方": {
           return getPieceStore.blackPieceArray;
         }
         default: {
@@ -108,12 +109,12 @@ export default {
     };
     const processWhoWin = () => {
       if (getPieceStore.redPieceArray.length >= 16) {
-        alert("黑方獲勝");
-        console.log("blackWin");
+        alert("黑方獲勝");       
+        resetPiece();
       }
       if (getPieceStore.blackPieceArray.length >= 16) {
-        alert("紅方獲勝");
-        console.log("redWin");
+        alert("紅方獲勝");        
+        resetPiece();
       }
     };
     onUpdated(() => {

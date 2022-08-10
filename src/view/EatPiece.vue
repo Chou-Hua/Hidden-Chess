@@ -1,21 +1,24 @@
-<template>
-  <div v-for="(item, index) in splitPieceArrayToShow(pieceArray)" :key="index">
-    <div>
-      <div class="piece-list" v-for="(data, num) in item" :key="num">
-        <div
-          class="eat-piece-first-cycle"
-          :class="pieceColor === 'red' ? 'border-red' : 'border-black'"
-        >
+<template>  
+    <div
+      v-for="(item, index) in splitPieceArrayToShow(pieceArray)"
+      :key="index"
+    >
+      <div>
+        <div class="piece-list" v-for="(data, num) in item" :key="num">
           <div
-            class="eat-piece-sec-cycle"
-            :class="pieceColor === 'red' ? 'border-red' : 'border-black'"
+            class="eat-piece-first-cycle"
+            :class="pieceColor === '紅方' ? 'border-red' : 'border-black'"
           >
-            {{ data }}
+            <div
+              class="eat-piece-sec-cycle"
+              :class="pieceColor === '紅方' ? 'border-red' : 'border-black'"
+            >
+              {{ data }}
+            </div>
           </div>
         </div>
       </div>
-    </div>    
-  </div>
+    </div>  
 </template>
 
 <script>
