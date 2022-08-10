@@ -166,6 +166,7 @@ export default {
                 getPieceType.lastXPosition
               ].name !== ""
             ) {
+              getPieceType.actionSetIsBeEatPiece(getPieceType.pieceArray[props.rowIndex][props.columnIndex]);
               getPieceType.pieceArray[props.rowIndex][props.columnIndex].name =
                 getPieceType.pieceArray[getPieceType.lastYPosition][
                   getPieceType.lastXPosition

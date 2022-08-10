@@ -9,8 +9,10 @@ export const usePieceStore = defineStore("pieceData", {
     nowPieceColor: "",
     lastXPosition: null,
     lastYPosition: null,
-    lastPieceName:'',
+    lastPieceName: "",
     isClickNowColorPiece: false,
+    blackPieceArray: [],
+    redPieceArray: [],
   }),
   actions: {
     insertPieceArray(data) {
@@ -28,18 +30,38 @@ export const usePieceStore = defineStore("pieceData", {
     actionsSetPieceIsOpen(rowIndex, columnIndex) {
       this.pieceArray[rowIndex][columnIndex].isOpen = true;
     },
-    actionsSetNowPieceColor(color){
+    actionsSetNowPieceColor(color) {
       this.nowPieceColor = color;
     },
-    actionSetLastPosition(x,y){
+    actionSetLastPosition(x, y) {
       this.lastXPosition = x;
       this.lastYPosition = y;
     },
-    actionsSetLastPieceName(name){
+    actionsSetLastPieceName(name) {
       this.lastPieceName = name;
     },
-    actionSetIsClickNowColorPiece(bool){
+    actionSetIsClickNowColorPiece(bool) {
       this.isClickNowColorPiece = bool;
+    },
+    actionSetIsBeEatPiece(type) {
+      const color = type["color"];
+      switch (color) {
+        case "red": {
+          this.redPieceArray.push(type.name);
+          break;
+        }
+        case "black": {
+          this.blackPieceArray.push(type.name);
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+    },
+    actionSetPieceArrayClear(){
+      this.blackPieceArray = [];
+      this.redPieceArray = [];
     }
   },
 });
