@@ -34,8 +34,7 @@ export default {
       }
       return newArray;
     };
-    const splitPieceArrayToShow = (pieceArray) => {
-      console.log(group(pieceArray, 7));
+    const splitPieceArrayToShow = (pieceArray) => {      
       return group(pieceArray, 7);
     };
     return {

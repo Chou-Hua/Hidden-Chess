@@ -1,5 +1,7 @@
 <template>
   <main>
+    <!-- <div class="pieces black">馬</div>
+    <div class="no-open-piece-test"></div> -->
     <div class="d-flex">
       <div class="piece-list-div direction-rtl">
         <EatPiece
@@ -93,8 +95,7 @@ export default {
           : `<div class="black-cycle"></div>`;
       }
     };
-    const getBeEatArray = (color) => {
-      console.log(color);
+    const getBeEatArray = (color) => {      
       switch (color) {
         case "紅方": {
           return getPieceStore.redPieceArray;

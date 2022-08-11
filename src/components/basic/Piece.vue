@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main>    
     <div
       v-if="pieceObj.name !== ''"
       :class="
@@ -19,7 +19,7 @@
       </div>
       <div
         v-else
-        class="no-open-piece"
+        class="no-open-piece-test"
         @click="openPiece(pieceObj.color)"
       ></div>
     </div>
@@ -76,7 +76,6 @@ export default {
         { x: left, y: lastY },
         { x: right, y: lastY },
       ];
-      // console.log(canMoveArray);
       let checkBol = false;
       canMoveArray.forEach((element) => {
         if (JSON.stringify(element) === JSON.stringify(targetObj)) {
@@ -198,14 +197,6 @@ export default {
               getPieceType.actionsSetNowPieceColor(nextColor);
             }
           }
-          // console.log("可不可以移動", isCanMove);
-          // console.log("可不可以吃", isCanEat);
-          // console.log("要吃掉的位置", props.columnIndex, props.rowIndex);
-          // console.log(
-          //   "移動的棋子的位置",
-          //   getPieceType.lastXPosition,
-          //   getPieceType.lastYPosition
-          // );
         }
       }
     };
@@ -237,9 +228,6 @@ export default {
         let firstColor = color === "red" ? "紅方" : "黑方";
         let secondColor = color === "red" ? "黑方" : "紅方";
         const nowColor = color === "red" ? "black" : "red";
-        // console.log(firstColor);
-        // console.log(secondColor);
-        // console.log(nowColor);
         getPieceType.actionStartStatus(true);
         getPieceType.actionsOffensiveMove(firstColor);
         getPieceType.actionsdefensiveMove(secondColor);

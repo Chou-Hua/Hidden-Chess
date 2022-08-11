@@ -11,6 +11,7 @@
 
 .rect-border {
   &:focus-within {
+    border:none;
     padding: 3px;
     background: linear-gradient(to left, #f00, #f00) left top no-repeat,
       linear-gradient(to bottom, #f00, #f00) left top no-repeat,
@@ -21,5 +22,26 @@
       linear-gradient(to left, #f00, #f00) right bottom no-repeat,
       linear-gradient(to left, #f00, #f00) right bottom no-repeat;
     background-size: 1px 20px, 20px 1px, 1px 20px, 20px 1px;
+  }
+}
+.title-text{
+  // width: 1000px;
+  // height: 200px;
+  font-family: "Microsoft YaHei";
+  font-size: 50px;
+  padding: 100px;
+  text-align: center;
+  background: rgb(58, 38, 1) -webkit-linear-gradient(left, rgb(255, 252, 252), rgb(255, 228, 152)) 0 0 no-repeat;
+  -webkit-background-size: 80px;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: rgba(184, 102, 9, 0.822);
+  -webkit-animation: slideShine 3s infinite;
+}
+@-webkit-keyframes slideShine {
+  0% {
+      background-position: 0 0;
+  }
+  100% {
+      background-position: 100% 100%;
   }
 }
