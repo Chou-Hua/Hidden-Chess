@@ -5,10 +5,7 @@
     >
       <div>
         <div class="piece-list" v-for="(data, num) in item" :key="num">
-          <div
-            class="eat-piece-first-cycle"
-            :class="pieceColor === '紅方' ? 'border-red' : 'border-black'"
-          >
+          <div>
             <div
               class="eat-piece-sec-cycle"
               :class="pieceColor === '紅方' ? 'border-red' : 'border-black'"

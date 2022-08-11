@@ -1,7 +1,5 @@
 <template>
-  <main>
-    <!-- <div class="pieces black">馬</div>
-    <div class="no-open-piece-test"></div> -->
+  <main class="main-background">
     <div class="d-flex">
       <div class="piece-list-div direction-rtl">
         <EatPiece
