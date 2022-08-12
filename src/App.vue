@@ -3,41 +3,64 @@ import Main from "./view/Main.vue";
 </script>
 
 <template>
-  <div       
-  style=" 
-  z-index: 1; 
-    position:fixed;
-    top     : 0;
-    left    : 0;
-    bottom  : 0;
-    right   : 0;
-    background-color: white;
-    backdrop-filter: blur(1000px);
-    opacity: 0.9;    
+  <div
+    v-if="isShowMask"
+    style="
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: white;
+      backdrop-filter: blur(1000px);
+      opacity: 0.9;
     "
-  > <div style="top:35%;left: 35%;position: absolute;">請旋轉螢幕</div>
-  <!-- <img src="./assets/roate1.gif" style="z-index: 7;
-    top: 35%;
-    left: 35%;
-    background-color: red;
-    position: absolute;
-    opacity: 1;"/> -->
+  >
+    <img src="./assets/roate1.gif" />
   </div>
-  <div class="title-text">單機版暗棋</div>
-  <Main />
-
+  <div v-else>
+    <div class="title-text">單機版暗棋</div>
+    <Main />
+  </div>
 </template>
 <script>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 export default {
   setup() {
-    let isShowMask = ref(true);
-    return{
-      isShowMask
-    }
+    const evt = "onorientationchange" in window ? "orientationchange" : "resize";   
+    const renderResize = () => {
+      let width = document.documentElement.clientWidth;
+      let height = document.documentElement.clientHeight;
+      // alert(width+"宽高"+height)
+      console.log(width, height);
+      if (width > height) {
+        alert("横屏1");
+      } else {
+        alert("竖屏1");
+      }
+    };
+    onMounted(() => {
+      window.addEventListener(orientationchange, renderResize());
+      if (window.orientation == 0 || window.orientation == 180) {
+        alert("豎屏");
+      } else {
+        alert("橫屏");
+      }
+    });
+    return {
+      renderResize,
+    };
+    // const isShowMask = ref(true);
+    // return {
+    //   isShowMask,
+    // };
   },
   components: {
     Main,
+  },
+  data() {
+    return {
+      isShowMask: false,
+    };
   },
 };
 </script>

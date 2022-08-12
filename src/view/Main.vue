@@ -50,14 +50,14 @@
         />
       </div>
     </div>
-  </main>  
+  </main>
 </template>
 <script>
 import Piece from "../components/basic/Piece.vue";
 import EatPiece from "./EatPiece.vue";
 import { createPieceRowColumn } from "../store/randomPiece";
 import { usePieceStore } from "../store/pieceStatus";
-import { onUpdated } from "vue";
+import { onUpdated,onMounted } from "vue";
 
 export default {
   setup() {
@@ -93,7 +93,7 @@ export default {
           : `<div class="black-cycle"></div>`;
       }
     };
-    const getBeEatArray = (color) => {      
+    const getBeEatArray = (color) => {
       switch (color) {
         case "紅方": {
           return getPieceStore.redPieceArray;
@@ -108,19 +108,37 @@ export default {
     };
     const processWhoWin = () => {
       if (getPieceStore.redPieceArray.length >= 16) {
-        alert("黑方獲勝");       
+        alert("黑方獲勝");
         resetPiece();
       }
       if (getPieceStore.blackPieceArray.length >= 16) {
-        alert("紅方獲勝");        
+        alert("紅方獲勝");
         resetPiece();
       }
     };
+    const renderResize = () => {
+      let width = document.documentElement.clientWidth;
+      let height = document.documentElement.clientHeight;
+      // alert(width+"宽高"+height)
+      console.log(width, height);
+      if (width > height) {
+        alert("横屏");
+      } else {
+        alert("竖屏");
+      }
+    };
+    onMounted(() => {
+      window.addEventListener("resize", renderResize(), false);
+      if (window.orientation == 90 || window.orientation == -90) {
+        console.log("asdasdasd");
+      }
+    });
     onUpdated(() => {
       processWhoWin();
     });
     return {
       getPieceStore,
+      renderResize,
       getBeEatArray,
       resetPiece,
       getNowPieceColorCycle,
