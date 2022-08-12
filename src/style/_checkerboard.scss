@@ -2,17 +2,17 @@
   font-size: 25px;
   font-weight: bold;
   color: rgb(247, 8, 8);
-  @media only screen and (max-width: 600px) {
-    transform: rotate(270deg);
-  }
+  // @media only screen and (max-width: 600px) {
+  //   transform: rotate(270deg);
+  // }
 }
 .font-piece-black {
   font-size: 25px;
   font-weight: bold;
   color: black;
-  @media only screen and (max-width: 600px) {
-    transform: rotate(270deg);
-  }
+  // @media only screen and (max-width: 600px) {
+  //   transform: rotate(270deg);
+  // }
 }
 
 .no-piece {
@@ -95,11 +95,11 @@
   padding: 20px;
 }
 
-.chess {
-  @media only screen and (max-width: 600px) {
-    transform: rotate(90deg);
-  }
-}
+// .chess {
+//   @media only screen and (max-width: 600px) {
+//     transform: rotate(90deg);
+//   }
+// }
 .float-right {
   float: right;
 }

@@ -50,7 +50,7 @@
         />
       </div>
     </div>
-  </main>
+  </main>  
 </template>
 <script>
 import Piece from "../components/basic/Piece.vue";
