@@ -74,10 +74,10 @@ export default {
     getPieceStore.actionSetPieceArrayClear();
     getPieceStore.insertPieceArray(createPieceRowColumn());
     onMounted(() => {
-      window.addEventListener("load", roateChange());
+      window.addEventListener("orientationchange", roateChange());
     });
     onUnmounted(() => {
-      window.removeEventListener("load", roateChange());
+      window.removeEventListener("orientationchange", roateChange());
     });
     onUpdated(() => {
       processWhoWin();
@@ -87,6 +87,8 @@ export default {
       window.onorientationchange = orientationChange;
     };
     const orientationChange = () => {
+      let i = document.getElementsByTagName('meta');
+      i[1]["content"] = "width=device-width,initial-scale=1,maximum-scale=2,minimum-scale=1";
       switch (window.orientation) {
         case 0:
           commonStore.actionsIsShowNeedToRotatePage(true);
