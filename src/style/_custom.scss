@@ -36,6 +36,10 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: rgba(184, 102, 9, 0.822);
   -webkit-animation: slideShine 3s infinite;
+  @media only screen and (max-width: 880px) {    
+    font-size:40px;
+    font-weight: bold;
+  }
 }
 @-webkit-keyframes slideShine {
   0% {
