@@ -1,69 +1,108 @@
 <template>
-  <main class="main-background">
-    <div class="d-flex">
-      <div class="piece-list-div direction-rtl">
-        <EatPiece
-          :pieceArray="getBeEatArray(getPieceStore.defensiveMove)"
-          :pieceColor="getPieceStore.defensiveMove"
-        />
-      </div>
-      <div>
-        <div style="display: flex; justify-content: space-between">
-          <div class="d-flex title-font">
-            <div>先手: {{ getPieceStore.offensiveMove }}</div>
-          </div>
-          <div class="now-round">
-            &nbsp;{{ getNowPieceColor() }}&nbsp;
-            <div v-html="getNowPieceColorCycle()"></div>
-          </div>
-          <div class="float-right title-font">
-            <div>&nbsp;後手: {{ getPieceStore.defensiveMove }}</div>
-          </div>
+  <div v-if="isShowMask()">
+    <Mask />
+  </div>
+  <div v-else>
+    <div class="title-text">單機版暗棋</div>
+    <main class="main-background">
+      <div class="d-flex">
+        <div class="piece-list-div direction-rtl">
+          <EatPiece
+            :pieceArray="getBeEatArray(getPieceStore.defensiveMove)"
+            :pieceColor="getPieceStore.defensiveMove"
+          />
         </div>
-        <div id="piece" class="chess">
-          <div
-            class="d-flex"
-            v-for="(item, index) in getPieceStore.pieceArray"
-            :key="index"
-          >
-            <div v-for="(data, num) in item" :key="num">
-              <div class="square">
-                <div>
-                  <Piece
-                    :pieceObj="data"
-                    :rowIndex="index"
-                    :columnIndex="num"
-                  />
+        <div>
+          <div style="display: flex; justify-content: space-between">
+            <div class="d-flex title-font">
+              <div>先手: {{ getPieceStore.offensiveMove }}</div>
+            </div>
+            <div class="now-round">
+              &nbsp;{{ getNowPieceColor() }}&nbsp;
+              <div v-html="getNowPieceColorCycle()"></div>
+            </div>
+            <div class="float-right title-font">
+              <div>&nbsp;後手: {{ getPieceStore.defensiveMove }}</div>
+            </div>
+          </div>
+          <div id="piece" class="chess">
+            <div
+              class="d-flex"
+              v-for="(item, index) in getPieceStore.pieceArray"
+              :key="index"
+            >
+              <div v-for="(data, num) in item" :key="num">
+                <div class="square">
+                  <div>
+                    <Piece
+                      :pieceObj="data"
+                      :rowIndex="index"
+                      :columnIndex="num"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          <div class="reset-button">
+            <button @click="resetPiece">Reset</button>
+          </div>
         </div>
-        <div class="reset-button">
-          <button @click="resetPiece">Reset</button>
+        <div class="piece-list-div">
+          <EatPiece
+            :pieceArray="getBeEatArray(getPieceStore.offensiveMove)"
+            :pieceColor="getPieceStore.offensiveMove"
+          />
         </div>
       </div>
-      <div class="piece-list-div">
-        <EatPiece
-          :pieceArray="getBeEatArray(getPieceStore.offensiveMove)"
-          :pieceColor="getPieceStore.offensiveMove"
-        />
-      </div>
-    </div>
-  </main>
+    </main>
+  </div>
 </template>
 <script>
 import Piece from "../components/basic/Piece.vue";
 import EatPiece from "./EatPiece.vue";
 import { createPieceRowColumn } from "../store/randomPiece";
 import { usePieceStore } from "../store/pieceStatus";
-import { onUpdated,onMounted } from "vue";
+import { useCommonStore } from "../store/common";
+import { onUpdated, onUnmounted, onMounted, nextTick } from "vue";
+import Mask from "./Mask.vue";
 
 export default {
   setup() {
+    const commonStore = useCommonStore();
     const getPieceStore = usePieceStore();
     getPieceStore.actionSetPieceArrayClear();
     getPieceStore.insertPieceArray(createPieceRowColumn());
+    onMounted(() => {
+      window.addEventListener("load", roateChange());
+    });
+    onUnmounted(() => {
+      window.removeEventListener("load", roateChange());
+    });
+    onUpdated(() => {
+      processWhoWin();
+    });
+    const roateChange = () => {
+      orientationChange();
+      window.onorientationchange = orientationChange;
+    };
+    const orientationChange = () => {
+      switch (window.orientation) {
+        case 0:
+          commonStore.actionsIsShowNeedToRotatePage(true);
+          break;
+        case -90:
+          commonStore.actionsIsShowNeedToRotatePage(false);
+
+          break;
+        case 90:
+          commonStore.actionsIsShowNeedToRotatePage(false);
+          break;
+        case 180:
+          commonStore.actionsIsShowNeedToRotatePage(true);
+          break;
+      }
+    };
     const resetPiece = () => {
       getPieceStore.pieceArray = createPieceRowColumn();
       getPieceStore.offensiveMove = "";
@@ -116,29 +155,23 @@ export default {
         resetPiece();
       }
     };
-    const renderResize = () => {
-      let width = document.documentElement.clientWidth;
-      let height = document.documentElement.clientHeight;
-      // alert(width+"宽高"+height)
-      console.log(width, height);
-      if (width > height) {
-        alert("横屏");
-      } else {
-        alert("竖屏");
-      }
+    const isMobile = () => {
+      let flag = navigator.userAgent.match(
+        /(phone|pad|pod|iPhone|ios|iPad|Android|Mobile|BlackBerry)/i
+      );
+      return flag;
     };
-    onMounted(() => {
-      window.addEventListener("resize", renderResize(), false);
-      if (window.orientation == 90 || window.orientation == -90) {
-        console.log("asdasdasd");
-      }
-    });
-    onUpdated(() => {
-      processWhoWin();
-    });
+    const isShowMask = () => {
+      return isMobile() && commonStore.isShowNeedToRotatePage;
+    };
+
     return {
       getPieceStore,
-      renderResize,
+      commonStore,
+      roateChange,
+      isShowMask,
+      orientationChange,
+      isMobile,
       getBeEatArray,
       resetPiece,
       getNowPieceColorCycle,
@@ -149,6 +182,7 @@ export default {
   components: {
     Piece,
     EatPiece,
+    Mask,
   },
 };
 </script>
