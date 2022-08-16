@@ -22,7 +22,13 @@
       linear-gradient(to left, #f00, #f00) right bottom no-repeat,
       linear-gradient(to left, #f00, #f00) right bottom no-repeat;
     background-size: 1px 20px, 20px 1px, 1px 20px, 20px 1px;
+    animation: crescendo 0.5s alternate infinite ease-in-out;
+    @keyframes crescendo {
+      0%   {padding: 3px;}
+      100% {padding: 7px;}
+    }
   }
+  
 }
 .title-text{
   // width: 1000px;
@@ -40,6 +46,7 @@
     font-size:40px;
     font-weight: bold;
   }
+  
 }
 @-webkit-keyframes slideShine {
   0% {
