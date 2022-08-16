@@ -3,7 +3,7 @@
     <Mask />
   </div>
   <div v-else>
-    <button>IOS樣式測試</button>
+    <button class="second-piece-cycle-red">IOS樣式測試</button>
     <div class="title-text">單機版暗棋</div>
     <main class="main-background">
       <div class="d-flex">
@@ -88,8 +88,6 @@ export default {
       window.onorientationchange = orientationChange;
     };
     const orientationChange = () => {
-      let i = document.getElementsByTagName('meta');
-      i[1]["content"] = "width=device-width,initial-scale=1,maximum-scale=2,minimum-scale=1";
       switch (window.orientation) {
         case 0:
           commonStore.actionsIsShowNeedToRotatePage(true);

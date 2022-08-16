@@ -11,11 +11,11 @@
         :class="getPieceCycleColorClass(pieceObj.color)"
         @click="getIndex(pieceObj)"
       >
-        <div :class="getPieceSecondCycleColorClass(pieceObj.color)">
+        <button :class="getPieceSecondCycleColorClass(pieceObj.color)">
           <div :class="getPieceColorClass(pieceObj.color)">
             {{ pieceObj.name }}
           </div>
-        </div>
+        </button>
       </div>
       <div
         v-else
