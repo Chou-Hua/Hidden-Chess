@@ -3,6 +3,7 @@
     <Mask />
   </div>
   <div v-else>
+    <button>IOS樣式測試</button>
     <div class="title-text">單機版暗棋</div>
     <main class="main-background">
       <div class="d-flex">
