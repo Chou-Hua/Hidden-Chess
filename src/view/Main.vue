@@ -3,7 +3,6 @@
     <Mask />
   </div>
   <div v-else>
-    <button class="second-piece-cycle-red">IOS樣式測試</button>
     <div class="title-text">單機版暗棋</div>
     <main class="main-background">
       <div class="d-flex">
@@ -45,8 +44,8 @@
               </div>
             </div>
           </div>
-          <div class="reset-button">
-            <button @click="resetPiece">Reset</button>
+          <div class="reset-button-div">
+            <button class="reset-button" @click="resetPiece">Reset</button>
           </div>
         </div>
         <div class="piece-list-div">

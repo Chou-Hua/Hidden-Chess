@@ -2,17 +2,12 @@
   font-size: 25px;
   font-weight: bold;
   color: rgb(247, 8, 8);
-  // @media only screen and (max-width: 600px) {
-  //   transform: rotate(270deg);
-  // }
 }
+
 .font-piece-black {
   font-size: 25px;
   font-weight: bold;
   color: black;
-  // @media only screen and (max-width: 600px) {
-  //   transform: rotate(270deg);
-  // }
 }
 
 .no-piece {
@@ -25,9 +20,9 @@
   border-collapse: collapse;
   background: #f9cc9d;
   margin: 0px -1px -1px 0px;
-  @media only screen and (max-width: 880px) {    
+  @media only screen and (max-width: 880px) {
     width: 35px;
-    height: 40px;
+    height: 35px;
   }
 }
 
@@ -68,7 +63,7 @@
   border-collapse: collapse;
   background: #f9cc9d;
   margin: 0px -1px -1px 0px;
-  @media only screen and (max-width: 880px) {    
+  @media only screen and (max-width: 880px) {
     width: 40px;
     height: 40px;
   }
@@ -103,10 +98,9 @@
     padding: 0px 0px 0px 0px;
     width: 30px;
     // height: 0px;
-  }  
+  }
 }
-
-.reset-button {
+.reset-button-div {
   padding: 20px;
 }
 .float-right {
@@ -142,7 +136,7 @@
   border: 6px double;
   font-weight: bold;
   margin: -3px;
-  @media only screen and (max-width: 880px) {    
+  @media only screen and (max-width: 880px) {
     width: 20px;
     height: 20px;
   }
@@ -161,7 +155,7 @@
   width: 100px;
   padding-top: 20px;
   display: flex;
-  @media only screen and (max-width: 880px) {    
+  @media only screen and (max-width: 880px) {
     display: block;
   }
 }
@@ -174,8 +168,8 @@
   font-size: 25px;
   font-weight: bold;
   padding-bottom: 10px;
-  @media only screen and (max-width: 880px) {    
-    font-size:20px;
+  @media only screen and (max-width: 880px) {
+    font-size: 20px;
     font-weight: bold;
   }
 }
@@ -183,8 +177,8 @@
 .title-font {
   font-size: 20px;
   font-weight: bold;
-  @media only screen and (max-width: 880px) {    
-    font-size:15px;
+  @media only screen and (max-width: 880px) {
+    font-size: 15px;
     font-weight: bold;
   }
 }
@@ -207,7 +201,7 @@
   box-shadow: 3px 3px 2px black;
   float: left;
   margin: 10px;
-  @media only screen and (max-width: 880px) {    
+  @media only screen and (max-width: 880px) {
     width: 48px;
     height: 48px;
   }
@@ -230,7 +224,26 @@
   left: 205px;
 }
 
-.mask{
+.mask {
   max-width: 300px;
   overflow-x: hidden;
+}
+
+.reset-button {
+  &:hover {
+    border-color: #646cff;
+  }
+  border-radius: 8px;
+  border: 2px solid black;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+reset-button:focus,
+reset-button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
 }
