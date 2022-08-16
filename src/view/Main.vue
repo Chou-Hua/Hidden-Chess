@@ -44,8 +44,8 @@
               </div>
             </div>
           </div>
-          <div class="reset-button">
-            <button @click="resetPiece">Reset</button>
+          <div class="reset-button-div">
+            <button class="reset-button" @click="resetPiece">Reset</button>
           </div>
         </div>
         <div class="piece-list-div">
@@ -87,8 +87,6 @@ export default {
       window.onorientationchange = orientationChange;
     };
     const orientationChange = () => {
-      let i = document.getElementsByTagName('meta');
-      i[1]["content"] = "width=device-width,initial-scale=1,maximum-scale=2,minimum-scale=1";
       switch (window.orientation) {
         case 0:
           commonStore.actionsIsShowNeedToRotatePage(true);
