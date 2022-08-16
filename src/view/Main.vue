@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isShowMask()">
+  <div class="mask" v-if="isShowMask()">
     <Mask />
   </div>
   <div v-else>
